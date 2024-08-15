@@ -4,12 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Beneficiario;
 use App\Models\Tarjeta;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class BeneficiariosController extends Controller
 {
-    public function index(){
-        $beneficiarios = Beneficiario::with('tarjeta')->get();
+    public function index(Request $request){
+        $query = Beneficiario::query();
+
+        if($request->has('searchUser')){
+            $search = $request->searchUser;
+            $query->where('nombre_beneficiario', 'LIKE', "%$search%")
+                ->orWhereHas('tarjeta', function ($q) use ($search){
+                    $q->where('numero_tarjeta', 'LIKE', "%$search%");
+                });
+        }
+        $beneficiarios = $query->with('tarjeta')->get();
         return view('beneficiarios.index', compact('beneficiarios'));
     }
 
@@ -34,6 +44,7 @@ class BeneficiariosController extends Controller
         $tarjeta->id_beneficiario = $beneficiario->id_beneficiario;
         $tarjeta->numero_tarjeta = $request->noTarjeta;
         $tarjeta->mesesPendientes_tarjeta = 0;
+        $tarjeta->proximoPago_tarjeta = Carbon::today()->addMonth();
         
         switch($request->userType){
             case '1':

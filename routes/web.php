@@ -12,6 +12,8 @@ Route::get('/cobros', [CobrosController::class, 'index'])->name('cobros.index');
 
 Route::get('/cobros/{id}', [CobrosController::class, 'show'])->name('cobros.show');
 
+Route::post('/cobros/{beneficiario}', [CobrosController:: class, 'pagar'])->name('cobros.pagar');
+
 Route::get('/beneficiarios', [BeneficiariosController::class, 'index'])->name('beneficiarios.index');
 
 Route::get('/beneficiarios/registro', [BeneficiariosController::class, 'create'])->name('beneficiarios.register');
@@ -23,3 +25,6 @@ Route::get('/beneficiarios/{beneficiario}/edit', [BeneficiariosController::class
 Route::put('/beneficiarios/{beneficiario}', [BeneficiariosController::class, 'update'])->name('beneficiarios.update');
 
 Route::delete('/beneficiarios/{beneficiario}', [BeneficiariosController::class, 'destroy'])->name('beneficiarios.destroy');
+
+Route::get('/beneficiarios/search', [BeneficiariosController::class, 'search'])->name('beneficiarios.search');
+

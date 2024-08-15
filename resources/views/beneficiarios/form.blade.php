@@ -86,28 +86,28 @@
                 <div class="row align-items-center">
                     <div class="col-12 col-md-6">
                         <label for="noTarjeta" class="form-label">No. de tarjeta</label>
-                        <input class="form-control" type="text" name="noTarjeta" id="noTarjeta" placeholder="Escribe número de tarjeta">
+                        <input class="form-control" type="text" name="noTarjeta" id="noTarjeta" placeholder="Escribe número de tarjeta" required>
                     </div>
                     <div class="col-12 col-md-6">
                         <label for="name" class="form-label">Nombre</label>
-                        <input class="form-control" type="text" name="name" id="name" placeholder="Escribe nombre">
+                        <input class="form-control" type="text" name="name" id="name" placeholder="Escribe nombre" required>
                     </div>
                     <div class="col-12 col-md-6">
                         <label for="aPaterno" class="form-label">Apellido paterno</label>
-                        <input class="form-control" type="text" name="aPaterno" id="aPaterno" placeholder="Escribe apellido paterno">
+                        <input class="form-control" type="text" name="aPaterno" id="aPaterno" placeholder="Escribe apellido paterno" required>
                     </div>
                     <div class="col-12 col-md-6">
                         <label for="aMaterno" class="form-label">Apellido materno</label>
-                        <input class="form-control" type="text" name="aMaterno" id="aMaterno" placeholder="Escribe apellido materno">
+                        <input class="form-control" type="text" name="aMaterno" id="aMaterno" placeholder="Escribe apellido materno" required>
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 my-2">
                         <label for="latitude" class="form-label">Latitud</label>
-                        <input class="form-control" type="number" name="latitude" id="latitude">
+                        <input class="form-control" type="number" name="latitude" id="latitude" required>
                         <!-- <input type="text" class="form-control" id="latitude" disabled> -->
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 my-2">
                         <label for="longitude" class="form-label">Longitud</label>
-                        <input class="form-control" type="number" name="longitude" id="longitude">
+                        <input class="form-control" type="number" name="longitude" id="longitude" required>
                         <!-- <input type="text" class="form-control" id="longitude" disabled> -->
                     </div>
                     <div class="col-12 col-md-4 my-2 align-self-end">
@@ -115,11 +115,11 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <label for="direccion" class="form-label">Direccion</label>
-                        <input class="form-control" type="text" name="direccion" id="direccion" placeholder="Escribe nombre de la calle">
+                        <input class="form-control" type="text" name="direccion" id="direccion" placeholder="Escribe nombre de la calle" required>
                     </div>
                     <div class="col-12 col-md-6">
                         <label for="colonia" class="form-label">Colonia</label>
-                        <input class="form-control" type="text" name="colonia" id="colonia" placeholder="Escribe nombre de la colonia">
+                        <input class="form-control" type="text" name="colonia" id="colonia" placeholder="Escribe nombre de la colonia" required>
                     </div>
                     <!-- <div class="col-12 d-none d-sm-block my-2">
                         <label for="formINE" class="form-label">Fotografía de INE</label>

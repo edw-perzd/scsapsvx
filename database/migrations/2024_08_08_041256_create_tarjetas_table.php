@@ -23,6 +23,7 @@ return new class extends Migration
                 ->on('beneficiarios')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+            $table->date('proximoPago_tarjeta');
             $table->timestamps();
         });
     }
