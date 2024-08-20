@@ -7,6 +7,7 @@ use App\Models\Tarjeta;
 use App\Models\Beneficiario;
 use App\Models\Pago;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 Carbon::setLocale('es');
 
@@ -76,7 +77,18 @@ class CobrosController extends Controller
 
         $pago->save();
 
-        return redirect()->route('cobros.index');
+        $detalles = [
+            'meses' => $pago->meses_pago,
+            'montoPagado' => $pago->meses_pago * $tarjeta->monto_tarjeta,
+            'fechaPago' => 'si'
+        ];
+
+        $beneficiario = Beneficiario::where('id_beneficiario', $beneficiario)->with('tarjeta')->first();
+
+        $pdf = PDF::loadView('pdf.ticket', compact('beneficiario', 'detalles', 'tarjeta'));
+        return $pdf->stream();
+
+        // return redirect()->route('cobros.index');
 
     }
 }
