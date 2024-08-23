@@ -19,7 +19,7 @@ class BeneficiariosController extends Controller
                     $q->where('numero_tarjeta', 'LIKE', "%$search%");
                 });
         }
-        $beneficiarios = $query->with('tarjeta')->get();
+        $beneficiarios = $query->with('tarjeta')->paginate();
         return view('beneficiarios.index', compact('beneficiarios'));
     }
 
@@ -28,6 +28,18 @@ class BeneficiariosController extends Controller
     }
 
     public function store(Request $request){
+        $request->validate([
+            'noTarjeta' => 'required|min:5|max:50|unique:tarjetas,numero_tarjeta',
+            'name' => 'required|min:3|max:50',
+            'aPaterno' => 'required|min:3|max:50',
+            'aMaterno' => 'required|min:3|max:50',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'direccion' => "required|min:5|max:100",
+            'colonia' => "required|min:5|max:50",
+            'userType' => 'required|not_in:0'
+        ]);
+
         $beneficiario = new Beneficiario();
         $tarjeta = new Tarjeta();
 
@@ -89,6 +101,19 @@ class BeneficiariosController extends Controller
 
         $beneficiario = Beneficiario::find($beneficiario);
         $tarjeta = Tarjeta::where('id_beneficiario', $beneficiario->id_beneficiario)->first();
+
+        $request->validate([
+            'noTarjeta' => "required|min:5|max:50|unique:tarjetas,numero_tarjeta,{$tarjeta->id_tarjeta},id_tarjeta",
+            'name' => 'required|min:3|max:50',
+            'aPaterno' => 'required|min:3|max:50',
+            'aMaterno' => 'required|min:3|max:50',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'direccion' => "required|min:5|max:100",
+            'colonia' => "required|min:5|max:50",
+            'userType' => 'required|not_in:0'
+        ]);
+
 
         $beneficiario->nombre_beneficiario = $request->name;
         $beneficiario->aPaterno_beneficiario = $request->aPaterno;

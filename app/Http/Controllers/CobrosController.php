@@ -31,7 +31,7 @@ class CobrosController extends Controller
                 break;
         }
 
-        $beneficiarios = $query->with('tarjeta')->get();
+        $beneficiarios = $query->with('tarjeta')->paginate();
 
         foreach($beneficiarios as $beneficiario){
             $tarjeta = Tarjeta::where('id_beneficiario', $beneficiario->id_beneficiario)->first();
@@ -76,19 +76,25 @@ class CobrosController extends Controller
         $tarjeta->save();
 
         $pago->save();
-
+        $hoy = Carbon::today()->format('d-m-Y');
         $detalles = [
             'meses' => $pago->meses_pago,
             'montoPagado' => $pago->meses_pago * $tarjeta->monto_tarjeta,
-            'fechaPago' => 'si'
+            'fechaPago' => $hoy,
+            'id_pago' => $pago->id_pago
         ];
 
         $beneficiario = Beneficiario::where('id_beneficiario', $beneficiario)->with('tarjeta')->first();
 
-        $pdf = PDF::loadView('pdf.ticket', compact('beneficiario', 'detalles', 'tarjeta'));
-        return $pdf->stream();
+        $pdf = PDF::setPaper([0, 0, 226.77, 650], 'portrait')->loadView('pdf.ticket', compact('beneficiario', 'detalles', 'tarjeta'));
+        $pdf->render();
+        return $pdf->download('recibo_' . $hoy . '_' . $tarjeta->numero_tarjeta . '.pdf');
+    }
 
-        // return redirect()->route('cobros.index');
-
+    public function imprimir($beneficiario){
+        $beneficiario = Beneficiario::where('id_beneficiario', $beneficiario)->with('tarjeta')->first();
+        $pdf = PDF::setPaper([0, 0, 240.94, 155.91], 'portrait')->loadView('pdf.tarjeta', compact('beneficiario'));
+        $pdf->render();
+        return $pdf->stream('tarjeta_' . $beneficiario->aPaterno_beneficiario . $beneficiario->aMaterno_beneficiario . $beneficiario->nombre_beneficiario . '_' . $beneficiario->id_beneficiario . '.pdf');
     }
 }

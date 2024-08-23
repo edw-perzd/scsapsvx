@@ -69,5 +69,6 @@
                     </tbody>
                 </table>
             </div>
+            {{ $beneficiarios->links() }}
         </div>
 </x-app-layout>

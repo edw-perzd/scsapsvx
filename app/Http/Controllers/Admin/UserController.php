@@ -17,24 +17,23 @@ class UserController extends Controller
             $search = $request->searchUser;
             $query->where('name', 'LIKE', "%$search%");
         }
-        $users = $query->with('roles')->get();
-        // $users = User::all();
+        $users = $query->with('roles')->paginate();
         return view('admin.users.index', compact('users'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
+    
     public function create()
     {
         return view('admin.users.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|min:3|max:50',
+            'email' => "required|unique:users,email",
+            'password' => 'required|min:8||max:15|confirmed',
+        ]);
+
         User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -43,30 +42,21 @@ class UserController extends Controller
 
         return redirect()->route('admin.users.index');
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
+    
     public function edit($user)
     {
-        $user = User::find($user);
+        $user = User::where('id', $user)->with('roles')->first();
         $roles = Role::all();
         return view('admin.users.edit', compact('user', 'roles'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, User $user)
     {
+        $request->validate([
+            'name' => 'required|min:3|max:50',
+            'email' => "required|unique:users,email,{$user->id}",
+        ]);
+
         $user->name = $request->name;
         $user->email = $request->email;
         if($request->filled('password')){

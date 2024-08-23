@@ -16,4 +16,8 @@ class Tarjeta extends Model
     public function beneficiario(){
         return $this->belongsTo(Beneficiario::class, 'id_beneficiario', 'id_beneficiario');
     }
+
+    public function pagos(){
+        return $this->hasMany(Pago::class);
+    }
 }

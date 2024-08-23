@@ -30,7 +30,6 @@
                         <th>Correo electrónico</th>
                         <th>Rol</th>
                         <th>Creado</th>
-                        <th>Modificado</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,7 +44,6 @@
                                 @endforelse
                             </td>
                             <td>{{$user->created_at}}</td>
-                            <td>{{$user->updated_at}}</td>
                             <td>
                                 <a class="btn btn-outline-primary btn-sm" href="{{route('admin.users.edit', $user)}}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -94,5 +92,6 @@
                 </tbody>
             </table>
         </div>
+        {{ $users->links() }}
     </div>
 </x-app-layout>

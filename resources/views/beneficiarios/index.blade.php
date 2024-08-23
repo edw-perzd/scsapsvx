@@ -13,6 +13,7 @@
                 <button type="submit" class="btn btn-outline-primary">Buscar</button>
             </div>
         </form>
+        @can('beneficiarios.register')
         <div class="d-grid gap-2 d-sm-flex my-4 justify-content-sm-end">
             <a class="btn btn-outline-success" href="{{route('beneficiarios.register')}}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
@@ -22,6 +23,7 @@
                 Registrar usuario
             </a>
         </div>
+        @endcan
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -31,7 +33,9 @@
                         <th>Dirección</th>
                         <th>Colonia</th>
                         <th>Tipo de usuario</th>
+                        @can('beneficiarios.edit')
                         <th>Acción</th>
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -43,6 +47,7 @@
                             <td>{{$beneficiario->colonia_beneficiario}}</td>
                             <td>{{$beneficiario->tarjeta->tipoUsuario_tarjeta}}</td>
                             <td>
+                            @can('beneficiarios.edit')
                                 <a class="btn btn-outline-primary btn-sm" href="{{route('beneficiarios.edit', $beneficiario->id_beneficiario)}}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -53,16 +58,9 @@
                                     </svg>
                                     Editar
                                 </a>
-                                <!-- <a class="btn btn-outline-danger btn-sm" href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-eraser" viewBox="0 0 16 16">
-                                        <path
-                                            d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828zm2.121.707a1 1 0 0 0-1.414 0L4.16 7.547l5.293 5.293 4.633-4.633a1 1 0 0 0 0-1.414zM8.746 13.547 3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293z" />
-                                    </svg>
-                                    Eliminar</a> -->
-
-                                    <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                            @endcan
+                            @can('beneficiarios.edit')
+                                <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{$beneficiario->id_beneficiario}}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-eraser" viewBox="0 0 16 16">
                                         <path
@@ -72,7 +70,7 @@
                                 </button>
 
                                 <!-- Modal -->
-                                <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="deleteModal{{$beneficiario->id_beneficiario}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                     <div class="modal-header">
@@ -94,10 +92,12 @@
                                 </div>
                                 </div>
                             </td>
+                            @endcan
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
+        {{ $beneficiarios->links() }}
     </div>
 </x-app-layout>

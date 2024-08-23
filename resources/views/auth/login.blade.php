@@ -16,7 +16,7 @@
                 @csrf
                 <div class="mb-4">
                     <label for="email" class="form-label">Correo electronico</label>
-                    <input type="email" class="form-control" name="email" placeholder="Ingresa tu correo electrónico" value="{{ old('email') }}">
+                    <input type="email" class="form-control" name="email" placeholder="Ingresa tu correo electrónico" autocomplete="off" value="{{ old('email') }}">
                 </div>
                 <div class="mb-4">
                     <label for="password" class="form-label">Contraseña</label>

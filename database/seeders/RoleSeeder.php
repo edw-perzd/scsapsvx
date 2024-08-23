@@ -27,14 +27,19 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'cobros.show'])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'cobros.pagar'])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'cobros.ticket'])->syncRoles([$role1, $role2]);
-
+        
         Permission::create(['name' => 'beneficiarios.index'])->syncRoles([$role1, $role2, $role3]);
         Permission::create(['name' => 'beneficiarios.register'])->syncRoles([$role1, $role3]);
         Permission::create(['name' => 'beneficiarios.create'])->syncRoles([$role1, $role3]);
         Permission::create(['name' => 'beneficiarios.edit'])->syncRoles([$role1, $role3]);
         Permission::create(['name' => 'beneficiarios.update'])->syncRoles([$role1, $role3]);
         Permission::create(['name' => 'beneficiarios.destroy'])->syncRoles([$role1, $role3]);
-
-
+        
+        Permission::create(['name' => 'cobros.imprimir'])->syncRoles([$role1, $role2]);
+        
+        Permission::create(['name' => 'reportes.index'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'reportes.dia'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'reportes.mes'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'reportes.users'])->syncRoles([$role1, $role2]);
     }
 }

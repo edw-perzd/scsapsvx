@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Tarjeta;
 
 class Pago extends Model
 {
@@ -14,4 +15,8 @@ class Pago extends Model
     protected $primaryKey = 'id_pago';
 
     protected $table = 'paga';
+
+    public function tarjeta(){
+        return $this->belongsTo(Tarjeta::class, 'id_tarjeta', 'id_tarjeta');
+    }
 }

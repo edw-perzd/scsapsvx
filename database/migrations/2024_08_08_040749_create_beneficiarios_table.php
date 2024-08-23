@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('aMaterno_beneficiario');
             $table->string('direccion_beneficiario');
             $table->string('colonia_beneficiario');
-            $table->integer('latitud_beneficiario');
-            $table->integer('longitud_beneficiario');
+            $table->double('latitud_beneficiario');
+            $table->double('longitud_beneficiario');
             $table->timestamps();
         });
     }
