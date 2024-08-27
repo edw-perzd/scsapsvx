@@ -19,14 +19,14 @@
                 <div class="row align-items-center">
                     <div class="col-12 col-md-4">
                         <label for="noTarjeta" class="form-label">No. de tarjeta</label>
-                        <input class="form-control" type="number" name="noTarjeta" id="noTarjeta" placeholder="Escribe número de tarjeta" value="{{ old('noTarjeta', $beneficiario->noTarjeta_beneficiario) }}" required>
+                        <input class="form-control" type="number" name="noTarjeta" id="noTarjeta" placeholder="Escribe número de tarjeta" value="{{ old('noTarjeta', $beneficiario->tarjeta->numero_tarjeta) }}" required>
                     </div>
                     <div class="col-6 col-md-4">
                         <label for="noToma" class="form-label">No. de toma</label>
-                        <input class="form-control" type="number" name="noToma" id="noToma" placeholder="Escribe número de toma" value="{{ old('noToma', $beneficiario->noToma_beneficiario) }}" required>
+                        <input class="form-control" type="number" name="noToma" id="noToma" placeholder="Escribe número de toma" value="{{ old('noToma', $beneficiario->tarjeta->numeroToma_tarjeta) }}" required>
                     </div>
                     <div class="col-6 col-md-4">
-                        <input type="checkbox" class="btn-check" id="isTitular" name="isTitular" autocomplete="off">
+                        <input type="checkbox" class="btn-check" id="isTitular" name="isTitular" value="0" autocomplete="off">
                         <label for="isTitular" class="btn btn-outline-success">Es titular</label>
                     </div>
                     <div class="col-12 col-md-6">
@@ -40,10 +40,6 @@
                     <div class="col-12 col-md-6">
                         <label for="aMaterno" class="form-label">Apellido materno</label>
                         <input class="form-control" type="text" name="aMaterno" id="aMaterno" placeholder="Escribe apellido materno" value="{{ old('aMaterno', $beneficiario->aMaterno_beneficiario) }}" readonly required>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label for="meses" class="form-label">Meses de adeudo</label>
-                        <input class="form-control" type="number" name="meses" id="meses" step="1" value="{{ old('latitude', 0) }}" required>
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 my-2">
                         <label for="latitude" class="form-label">Latitud</label>

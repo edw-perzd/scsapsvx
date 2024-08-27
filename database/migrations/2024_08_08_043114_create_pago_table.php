@@ -20,7 +20,7 @@ return new class extends Migration
                 ->onDelete('set null')
                 ->onUpdate('cascade');
             $table->timestamp('fecha_pago');
-            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_user')->nullable();
             $table->foreign('id_user')
                 ->references('id')
                 ->on('users')

@@ -130,7 +130,6 @@ class BeneficiariosController extends Controller
             'isTitular' => 'boolean',
             'aPaterno' => 'required|min:3|max:50',
             'aMaterno' => 'required|min:3|max:50',
-            'meses' => 'required',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'direccion' => "required|min:5|max:100",

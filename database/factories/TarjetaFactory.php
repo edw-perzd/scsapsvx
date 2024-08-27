@@ -20,6 +20,7 @@ class TarjetaFactory extends Factory
     {
         return [
             'numero_tarjeta' => $this->faker->creditCardNumber(),
+            'numeroToma_tarjeta' => $this->faker->numerify(),
             'tipoUsuario_tarjeta' => $this->faker->word(),
             'monto_tarjeta' => $this->faker->numerify(),
             'mesesPendientes_tarjeta' => 0,

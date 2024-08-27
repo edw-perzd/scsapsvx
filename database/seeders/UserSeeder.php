@@ -22,6 +22,15 @@ class UserSeeder extends Seeder
         $user->save();
         $user->assignRole('Admin');
 
+        $user1 = new User();
+
+        $user1->name = 'Carlos Hernandez';
+        $user1->email = 'csanchezhernandez567@gmail.com';
+        $user1->password = bcrypt('12345678');
+
+        $user1->save();
+        $user1->assignRole('Admin');
+
         User::factory(4)->create();
     }
 }

@@ -20,6 +20,7 @@ class BeneficiarioFactory extends Factory
             'nombre_beneficiario' => $this->faker->name(),
             'aPaterno_beneficiario' => $this->faker->lastName(),
             'aMaterno_beneficiario' => $this->faker->lastName(),
+            'isTitular_beneficiario' => false,
             'direccion_beneficiario' => $this->faker->address(),
             'colonia_beneficiario' => $this->faker->country(),
             'latitud_beneficiario' => $this->faker->numerify(),

@@ -71,6 +71,10 @@ class CobrosController extends Controller
 
         $pago->meses_pago = count($validatedData['meses']);
 
+        $pago->monto_pago=$pago->meses_pago * $tarjeta->monto_tarjeta;
+
+        $pago->id_user=Auth::user()->id;
+
         $tarjeta->proximoPago_tarjeta = Carbon::parse($tarjeta->proximoPago_tarjeta)->addMonths(count($validatedData['meses']));
 
         $tarjeta->save();
