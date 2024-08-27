@@ -95,6 +95,6 @@ class CobrosController extends Controller
         $beneficiario = Beneficiario::where('id_beneficiario', $beneficiario)->with('tarjeta')->first();
         $pdf = PDF::setPaper([0, 0, 240.94, 155.91], 'portrait')->loadView('pdf.tarjeta', compact('beneficiario'));
         $pdf->render();
-        return $pdf->stream('tarjeta_' . $beneficiario->aPaterno_beneficiario . $beneficiario->aMaterno_beneficiario . $beneficiario->nombre_beneficiario . '_' . $beneficiario->id_beneficiario . '.pdf');
+        return $pdf->download('tarjeta_' . $beneficiario->aPaterno_beneficiario . $beneficiario->aMaterno_beneficiario . $beneficiario->nombre_beneficiario . '_' . $beneficiario->id_beneficiario . '.pdf');
     }
 }

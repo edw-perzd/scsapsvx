@@ -20,9 +20,13 @@
         <div class="navbar-dark bg-primary">
             <ul class="nav navbar justify-content-center navbar-expand-md navbar-dark bg-primary container">
                 <li class="nav-item">
-                    <a class="navbar-brand" href="{{ route('login') }}">
+                    <a class="navbar-brand d-none d-md-block" href="{{ route('login') }}">
                         <img src="{{ asset('logo_contorno.png') }}" alt="Logo" width="30" height="30" class="d-inline-block align-text-top mx-1">
                         Sistema para la Gestion del Servicio de Agua Potable - San Vicente Xiloxochitla
+                    </a>
+                    <a class="navbar-brand d-block d-md-none" href="{{ route('login') }}">
+                        <img src="{{ asset('logo_contorno.png') }}" alt="Logo" width="30" height="30" class="d-inline-block align-text-top mx-1">
+                        SGSAPSVX
                     </a>
                 </li>
             </ul>
