@@ -17,9 +17,17 @@
                 @csrf
                 
                 <div class="row align-items-center">
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-4">
                         <label for="noTarjeta" class="form-label">No. de tarjeta</label>
-                        <input class="form-control" type="text" name="noTarjeta" id="noTarjeta" placeholder="Escribe número de tarjeta" value="{{ old('noTarjeta') }}" required>
+                        <input class="form-control" type="number" name="noTarjeta" id="noTarjeta" placeholder="Escribe número de tarjeta" value="{{ old('noTarjeta') }}" required>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <label for="noToma" class="form-label">No. de toma</label>
+                        <input class="form-control" type="number" name="noToma" id="noToma" placeholder="Escribe número de toma" value="{{ old('noToma') }}" required>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <input type="checkbox" class="btn-check" id="isTitular" name="isTitular" autocomplete="off">
+                        <label for="isTitular" class="btn btn-outline-success">Es titular</label>
                     </div>
                     <div class="col-12 col-md-6">
                         <label for="name" class="form-label">Nombre</label>
@@ -33,13 +41,17 @@
                         <label for="aMaterno" class="form-label">Apellido materno</label>
                         <input class="form-control" type="text" name="aMaterno" id="aMaterno" placeholder="Escribe apellido materno" value="{{ old('aMaterno') }}" required>
                     </div>
+                    <div class="col-12 col-md-6">
+                        <label for="meses" class="form-label">Meses de adeudo</label>
+                        <input class="form-control" type="number" name="meses" id="meses" step="1" value="{{ old('latitude', 0) }}" required>
+                    </div>
                     <div class="col-12 col-sm-6 col-md-4 my-2">
                         <label for="latitude" class="form-label">Latitud</label>
-                        <input class="form-control" type="number" name="latitude" id="latitude" step="0.00000001" value="{{ old('latitude') }}" readonly required>
+                        <input class="form-control" type="number" name="latitude" id="latitude" step="0.00000001" value="{{ old('latitude') }}" required>
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 my-2">
                         <label for="longitude" class="form-label">Longitud</label>
-                        <input class="form-control" type="number" name="longitude" id="longitude" step="0.00000001" value="{{ old('longitude') }}" readonly required>
+                        <input class="form-control" type="number" name="longitude" id="longitude" step="0.00000001" value="{{ old('longitude') }}" required>
                     </div>
                     <div class="col-12 col-md-4 my-2 align-self-end">
                         <button type="button"class="btn btn-primary" onclick="getLocation()">Obtener ubicación</button>
@@ -51,17 +63,24 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <label for="colonia" class="form-label">Colonia</label>
-                        <input class="form-control" type="text" name="colonia" id="colonia" placeholder="Escribe nombre de la colonia" value="{{ old('colonia') }}" required>
+                        <select class="form-select" name="colonia" id="colonia">
+                            <option value=0 selected>Elije la colonia...</option>
+                            <option value=1>Centro</option>
+                            <option value=2>Emiliano Zapata</option>
+                            <option value=3>Barrio Santa Cruz</option>
+                            <option value=4>Vista Hermosa</option>
+                          </select>
+                        {{-- <input class="form-control" type="text" name="colonia" id="colonia" placeholder="Escribe nombre de la colonia" value="{{ old('colonia') }}" required> --}}
                     </div>
                     <div class="col-12 col-sm-8 my-2">
                         <label for="userType" class="form-label">Tipo de usuario</label>
                         <select class="form-select" name="userType" id="userType">
-                          <option value="" selected>Elije tu tipo de usuario...</option>
-                          <option value="1">Jefe de Familia</option>
-                          <option value="2">Padre Soltero</option>
-                          <option value="3">Madre Soltera</option>
-                          <option value="4">Adulto Mayor</option>
-                          <option value="5">Voluntario</option>
+                          <option value=0 selected>Elije el tipo de usuario...</option>
+                          <option value=1>Jefe de Familia</option>
+                          <option value=2>Padre Soltero</option>
+                          <option value=3>Madre Soltera</option>
+                          <option value=4>Adulto Mayor</option>
+                          <option value=5>Voluntario</option>
                         </select>
                     </div>
                     <div class="col-12 col-sm-4 my-2 align-self-end">

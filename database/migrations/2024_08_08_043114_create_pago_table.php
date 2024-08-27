@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('paga', function (Blueprint $table) {
+        Schema::create('pago', function (Blueprint $table) {
             $table->id('id_pago');
             $table->unsignedBigInteger('id_tarjeta')->nullable();
             $table->foreign('id_tarjeta')
@@ -20,7 +20,14 @@ return new class extends Migration
                 ->onDelete('set null')
                 ->onUpdate('cascade');
             $table->timestamp('fecha_pago');
+            $table->unsignedBigInteger('id_user');
+            $table->foreign('id_user')
+                ->references('id')
+                ->on('users')
+                ->onDelete('set null')
+                ->onUpdate('cascade');
             $table->integer('meses_pago');
+            $table->double('monto_pago');
         });
     }
 

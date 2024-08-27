@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('tarjetas', function (Blueprint $table) {
             $table->id('id_tarjeta');
             $table->unsignedBigInteger('numero_tarjeta');
+            $table->unsignedBigInteger('numeroToma_tarjeta');
             $table->string('tipoUsuario_tarjeta');
             $table->double('monto_tarjeta');
             $table->integer('mesesPendientes_tarjeta');

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('colonia_beneficiario');
             $table->double('latitud_beneficiario');
             $table->double('longitud_beneficiario');
+            $table->boolean('isTitular_beneficiario');
             $table->timestamps();
         });
     }

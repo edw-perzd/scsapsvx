@@ -22,6 +22,6 @@ class UserSeeder extends Seeder
         $user->save();
         $user->assignRole('Admin');
 
-        User::factory(10)->create();
+        User::factory(4)->create();
     }
 }
