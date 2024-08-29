@@ -19,4 +19,8 @@ class Pago extends Model
     public function tarjeta(){
         return $this->belongsTo(Tarjeta::class, 'id_tarjeta', 'id_tarjeta');
     }
+
+    public function user(){
+        return $this->belongsTo(User::class, 'id_user', 'id');
+    }
 }

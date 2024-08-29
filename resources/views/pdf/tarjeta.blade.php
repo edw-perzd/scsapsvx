@@ -11,6 +11,9 @@
             font-family: 'Helvetica', sans-serif;
             
         }
+        .codebar div{
+            padding: 0;
+        }
         p{
             padding: 0 3;
             margin: 0 3;
@@ -60,7 +63,12 @@
     <div class="salto"></div>
 
     <center>
-        <img src="#" width="110" height="60">
+        {{-- <img src="#" width="110" height="60"> --}}
+        <div class="codebar">
+            {!! DNS1D::getBarcodeHTML($beneficiario->tarjeta->numero_tarjeta, 'CODABAR', 1.5, 30) !!}
+            <p style="font-size: 5; margin-top: 5;">{{ $beneficiario->tarjeta->numero_tarjeta }}</p>
+        </div>
+        
         <div>
             <p style="font-size: 12px;">Dirección: {{ $beneficiario->direccion_beneficiario }}, {{ $beneficiario->colonia_beneficiario }}</p>
             <p style="font-size: 12px; margin-top: 5;">Monto por mes: ${{ $beneficiario->tarjeta->monto_tarjeta }}</p>

@@ -20,7 +20,7 @@ class ReportesController extends Controller
         ]);
 
         $hoy = Carbon::parse($request->date);
-        $pagos = Pago::whereRaw('DATE(fecha_pago) = ?', [$hoy])->with(['tarjeta.beneficiario'])->get();
+        $pagos = Pago::whereRaw('DATE(fecha_pago) = ?', [$hoy])->with(['tarjeta.beneficiario', 'user'])->get();
 
         $totalmontos = 0;
         $totalpagos = 0;
@@ -32,7 +32,8 @@ class ReportesController extends Controller
 
         $pdf = PDF::loadView('pdf.reports.dia', compact('pagos', 'hoy', 'totalmontos', 'totalpagos'));
         $pdf->render();
-        return $pdf->download('reporte_pagos_' . $hoy->format('d_m_Y') . '.pdf');
+        // return $pdf->download('reporte_pagos_' . $hoy->format('d_m_Y') . '.pdf');
+        return $pdf->stream();
     }
 
     public function mes(Request $request){

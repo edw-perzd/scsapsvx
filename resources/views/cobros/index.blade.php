@@ -7,13 +7,16 @@
                 <div class="d-none d-sm-block col-sm-1">
                     <label for="filtro">Filtrar por</label>
                 </div>
-                <div class="col-8 col-sm-5">
+                <div class="col-12 col-sm-4">
                     <select class="form-select" name="filtro" id="filtro" aria-label="Select Filter Users">
                         <option value="1">Todos</option>
                         <option value="2" {{ request('filtro') == '2' ? 'selected': '' }}>Con adeudos (Más a menos)</option>
                         <option value="3" {{ request('filtro') == '3' ? 'selected': '' }}>Con adeudos (Menos a más)</option>
                         <option value="4" {{ request('filtro') == '4' ? 'selected': '' }}>Sin adeudos</option>
                     </select>
+                </div>
+                <div class="col-12 col-sm-4 my-2 my-sm-0">
+                    <input class="form-control" type="text" name="searchUser" id="searchUser" placeholder="Buscar por: Nombre/Apellido/Tarjeta/Toma" value="{{ request('searchUser') }}">
                 </div>
                 <div class="col-4 col-sm-2 d-grid">
                     <button type="submit" class="btn btn-outline-primary">Buscar</button>

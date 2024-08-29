@@ -59,6 +59,10 @@
             <td><p>${{ $detalles['montoPagado'] }}</p></td>
         </tr>
         <tr>
+            <td><p><b>Meses pagados: </b></p></td>
+            <td><p>{{ $detalles['mesesPagados'] }}</p></td>
+        </tr>
+        <tr>
             <td><p><b>Fecha de pago: </b></p></td>
             <td><p>{{ $detalles['fechaPago'] }}</p></td>
         </tr>

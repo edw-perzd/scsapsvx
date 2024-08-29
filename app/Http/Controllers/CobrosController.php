@@ -45,6 +45,19 @@ class CobrosController extends Controller
                 break;
         }
 
+        if($request->has('searchUser')){
+            $search = $request->searchUser;
+            $query->where('nombre_beneficiario', 'LIKE', "%$search%")
+                ->orWhere('aPaterno_beneficiario', 'LIKE', "%$search")
+                ->orWhere('aMaterno_beneficiario', 'LIKE', "%$search")
+                ->orWhereHas('tarjeta', function ($q) use ($search){
+                    $q->where('numero_tarjeta', 'LIKE', "%$search%");
+                })
+                ->orWhereHas('tarjeta', function ($q) use ($search){
+                    $q->where('numeroToma_tarjeta', 'LIKE', "%$search%");
+                });
+        }
+
         $beneficiarios = $query->paginate();
         
         foreach($beneficiarios as $beneficiario){
@@ -121,12 +134,13 @@ class CobrosController extends Controller
             'meses' => $pago->meses_pago,
             'montoPagado' => $pago->meses_pago * $tarjeta->monto_tarjeta,
             'fechaPago' => $hoy,
-            'id_pago' => $pago->id_pago
+            'id_pago' => $pago->id_pago,
+            'mesesPagados' => $pago->meses_pago
         ];
 
         $beneficiario = Beneficiario::where('id_beneficiario', $beneficiario)->with('tarjeta')->first();
 
-        $pdf = PDF::setPaper([0, 0, 226.77, 650], 'portrait')->loadView('pdf.ticket', compact('beneficiario', 'detalles', 'tarjeta'));
+        $pdf = PDF::setPaper([0, 0, 226.77, 700], 'portrait')->loadView('pdf.ticket', compact('beneficiario', 'detalles', 'tarjeta'));
         $pdf->render();
         return $pdf->download('recibo_' . $hoy . '_' . $tarjeta->numero_tarjeta . '.pdf');
     }

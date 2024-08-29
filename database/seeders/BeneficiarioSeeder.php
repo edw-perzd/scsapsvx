@@ -14,6 +14,6 @@ class BeneficiarioSeeder extends Seeder
      */
     public function run(): void
     {
-        Beneficiario::factory(20)->has(Tarjeta::factory())->create();
+        Beneficiario::factory(10)->has(Tarjeta::factory())->create();
     }
 }

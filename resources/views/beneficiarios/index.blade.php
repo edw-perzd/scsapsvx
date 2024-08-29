@@ -7,7 +7,7 @@
         <!-- FORMULARIO DE BÚSQUEDA -->
         <form class="row justify-content-center mt-4" action="{{route('beneficiarios.index')}}" method="GET">
             <div class="col-8 col-sm-5">
-                <input class="form-control" type="text" name="searchUser" id="searchUser" placeholder="Nombre/Apellido/Tarjeta/Toma" value="{{ request('searchUser') }}">
+                <input class="form-control" type="text" name="searchUser" id="searchUser" placeholder="Buscar por: Nombre/Apellido/Tarjeta/Toma" value="{{ request('searchUser') }}">
             </div>
             <div class="col-4 col-sm-2 d-grid">
                 <button type="submit" class="btn btn-outline-primary">Buscar</button>

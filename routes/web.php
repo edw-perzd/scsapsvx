@@ -42,7 +42,7 @@ Route::put('sgsapsvx/usuarios/{beneficiario}', [BeneficiariosController::class, 
 
 Route::delete('sgsapsvx/usuarios/{beneficiario}', [BeneficiariosController::class, 'destroy'])->middleware(['auth', 'verified', 'can:beneficiarios.destroy'])->name('beneficiarios.destroy');
 
-Route::resource('sgsapsvxusers', UserController::class)->middleware(['auth', 'verified', 'can:admin.users.index'])->names('admin.users');
+Route::resource('users', UserController::class)->middleware(['auth', 'verified', 'can:admin.users.index'])->names('admin.users');
 
 Route::get('sgsapsvx/reportes', [ReportesController::class, 'index'])->middleware(['auth', 'verified', 'can:reportes.index'])->name('reportes.index');
 

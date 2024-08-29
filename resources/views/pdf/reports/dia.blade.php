@@ -77,6 +77,7 @@
                     <th>Monto pagado</th>
                     <th>Nombre del beneficiario</th>
                     <th>Tipo de usuario</th>
+                    <th>Pago realizado por</th>
                     <th>Fecha y hora de pago</th>
                 </tr>
             </thead>
@@ -89,6 +90,7 @@
                     <td>${{ ($pago->meses_pago * $pago->tarjeta->monto_tarjeta)  }}</td>
                     <td>{{ $pago->tarjeta->beneficiario->nombre_beneficiario  }} {{ $pago->tarjeta->beneficiario->aPaterno_beneficiario  }} {{ $pago->tarjeta->beneficiario->aMaterno_beneficiario  }}</td>
                     <td>{{ $pago->tarjeta->tipoUsuario_tarjeta }}</td>
+                    <td>{{ $pago->user->name }}</td>
                     <td>{{ $pago->fecha_pago }}</td>
                 </tr>
                 @endforeach
