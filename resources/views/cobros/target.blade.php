@@ -26,6 +26,9 @@
             </div>
             @if($beneficiario->tarjeta->mesesPendientes_tarjeta > 0)
                 <h1 class="display-6 mt-4 text-center">Selecciona los meses a pagar:</h1>
+            @else
+                <h1 class="display-6 mt-4 text-center">Selecciona los meses proximos a pagar:</h1>
+            @endif
                 <hr>
                 <form action="{{route('cobros.pagar', $beneficiario)}}" method="POST">
                 @csrf
@@ -34,6 +37,12 @@
                             <div class="col-4 col-sm-2 col-lg-1 mb-3">
                                 <input type="checkbox" class="btn-check" name="meses[]" id="btn-check-{{$fecha}}" autocomplete="off">
                                 <label class="btn btn-outline-danger" for="btn-check-{{$fecha}}">{{$fecha}}</label><br>
+                            </div>
+                        @endforeach
+                        @foreach ($mesesRestantes as $fechaR)
+                            <div class="col-4 col-sm-2 col-lg-1 mb-3">
+                                <input type="checkbox" class="btn-check" name="meses[]" id="btn-check-{{$fechaR}}" autocomplete="off">
+                                <label class="btn btn-outline-primary" for="btn-check-{{$fechaR}}">{{$fechaR}}</label><br>
                             </div>
                         @endforeach
                         <div class="w-100 my-2"></div>
@@ -62,20 +71,6 @@
                         </a>
                     </div>
                 </div>
-            @else
-                <h1 class="display-6 mt-4 text-center">Esta persona no tiene meses pendientes</h1>
-                <hr>
-                <div class="row justify-content-center">
-                    <div class="col-12 col-sm-3 my-2 d-grid">
-                        <a class="btn btn-primary" href="{{ route('cobros.imprimir', $beneficiario) }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-table" viewBox="0 0 16 16">
-                                <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm15 2h-4v3h4zm0 4h-4v3h4zm0 4h-4v3h3a1 1 0 0 0 1-1zm-5 3v-3H6v3zm-5 0v-3H1v2a1 1 0 0 0 1 1zm-4-4h4V8H1zm0-4h4V4H1zm5-3v3h4V4zm4 4H6v3h4z"/>
-                        </svg>
-                        Imprimir tarjeta
-                        </a>
-                    </div>
-                </div>
-            @endif
         </div>
     </div>
 

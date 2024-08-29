@@ -22,7 +22,15 @@ class ReportesController extends Controller
         $hoy = Carbon::parse($request->date);
         $pagos = Pago::whereRaw('DATE(fecha_pago) = ?', [$hoy])->with(['tarjeta.beneficiario'])->get();
 
-        $pdf = PDF::loadView('pdf.reports.dia', compact('pagos', 'hoy'));
+        $totalmontos = 0;
+        $totalpagos = 0;
+
+        foreach($pagos as $pago){
+            $totalmontos += $pago->monto_pago;
+            $totalpagos++;
+        }
+
+        $pdf = PDF::loadView('pdf.reports.dia', compact('pagos', 'hoy', 'totalmontos', 'totalpagos'));
         $pdf->render();
         return $pdf->download('reporte_pagos_' . $hoy->format('d_m_Y') . '.pdf');
     }
@@ -35,7 +43,15 @@ class ReportesController extends Controller
         $mes = Carbon::parse($request->month);
         $pagos = Pago::whereMonth('fecha_pago', $mes->month)->whereYear('fecha_pago', $mes->year)->get();
 
-        $pdf = PDF::loadView('pdf.reports.mes', compact('pagos', 'mes'));
+        $totalmontos = 0;
+        $totalpagos = 0;
+
+        foreach($pagos as $pago){
+            $totalmontos += $pago->monto_pago;
+            $totalpagos++;
+        }
+
+        $pdf = PDF::loadView('pdf.reports.mes', compact('pagos', 'mes', 'totalmontos', 'totalpagos'));
         $pdf->render();
         return $pdf->download('reporte_pagos_' . $mes->format('F_Y') . '.pdf');
     }

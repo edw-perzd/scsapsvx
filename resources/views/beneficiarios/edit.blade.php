@@ -26,7 +26,11 @@
                         <input class="form-control" type="number" name="noToma" id="noToma" placeholder="Escribe número de toma" value="{{ old('noToma', $beneficiario->tarjeta->numeroToma_tarjeta) }}" required>
                     </div>
                     <div class="col-6 col-md-4">
-                        <input type="checkbox" class="btn-check" id="isTitular" name="isTitular" value="0" autocomplete="off">
+                        @if($beneficiario->isTitular_beneficiario == true)
+                            <input type="checkbox" class="btn-check" id="isTitular" name="isTitular" value=1 autocomplete="off" checked>
+                        @else
+                            <input type="checkbox" class="btn-check" id="isTitular" name="isTitular" value=1 autocomplete="off">
+                        @endif
                         <label for="isTitular" class="btn btn-outline-success">Es titular</label>
                     </div>
                     <div class="col-12 col-md-6">
@@ -60,29 +64,48 @@
                     <div class="col-12 col-md-6">
                         <label for="colonia" class="form-label">Colonia</label>
                         <select class="form-select" name="colonia" id="colonia">
-                            <option value=0 selected>Elije la colonia...</option>
-                            <option value=1>Centro</option>
-                            <option value=2>Emiliano Zapata</option>
-                            <option value=3>Barrio Santa Cruz</option>
-                            <option value=4>Vista Hermosa</option>
+                            @switch($beneficiario->colonia_beneficiario)
+                                @case('Centro')
+                                    <option value=0>Elije la colonia</option>
+                                    <option selected value=1>Centro</option>
+                                    <option value=2>Emiliano Zapata</option>
+                                    <option value=3>Barrio Santa Cruz</option>
+                                    <option value=4>Vista Hermosa</option>
+                                    @break
+    
+                                @case('Emiliano Zapata')
+                                    <option value=0>Elije la colonia</option>
+                                    <option value=1>Centro</option>
+                                    <option selected value=2>Emiliano Zapata</option>
+                                    <option value=3>Barrio Santa Cruz</option>
+                                    <option value=4>Vista Hermosa</option>
+                                    @break
+    
+                                @case('Barrio Santa Cruz')
+                                    <option value=0>Elije la colonia</option>
+                                    <option value=1>Centro</option>
+                                    <option value=2>Emiliano Zapata</option>
+                                    <option selected value=3>Barrio Santa Cruz</option>
+                                    <option value=4>Vista Hermosa</option>
+                                    @break
+
+                                @case('Vista Hermosa')
+                                    <option value=0>Elije la colonia</option>
+                                    <option value=1>Centro</option>
+                                    <option value=2>Emiliano Zapata</option>
+                                    <option value=3>Barrio Santa Cruz</option>
+                                    <option selected value=4>Vista Hermosa</option>
+                                    @break
+    
+                                @default
+                                    <option selected value=0>Elije la colonia</option>
+                                    <option value=1>Centro</option>
+                                    <option value=2>Emiliano Zapata</option>
+                                    <option value=3>Barrio Santa Cruz</option>
+                                    <option value=4>Vista Hermosa</option>
+                                    @break
+                            @endswitch
                         </select>
-                        {{-- @switch($beneficiario->colonia_beneficiario)
-                            @case('Centro')
-                                <p>El usuario está activo.</p>
-                                @break
-
-                            @case('Emiliano zapata')
-                                <p>El usuario está inactivo.</p>
-                                @break
-
-                            @case('suspended')
-                                <p>El usuario está suspendido.</p>
-                                @break
-
-                            @default
-                                <p>Estado desconocido.</p>
-                        @endswitch --}}
-                        {{-- <input class="form-control" type="text" name="colonia" id="colonia" placeholder="Escribe nombre de la colonia" value="{{ old('colonia', $beneficiario->colonia_beneficiario) }}" required> --}}
                     </div>
                     <div class="col-12 col-sm-8 my-2">
                         <label for="userType" class="form-label">Tipo de usuario</label>

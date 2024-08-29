@@ -14,7 +14,7 @@ class Pago extends Model
 
     protected $primaryKey = 'id_pago';
 
-    protected $table = 'paga';
+    protected $table = 'pago';
 
     public function tarjeta(){
         return $this->belongsTo(Tarjeta::class, 'id_tarjeta', 'id_tarjeta');

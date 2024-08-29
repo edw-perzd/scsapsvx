@@ -9,9 +9,10 @@
                 </div>
                 <div class="col-8 col-sm-5">
                     <select class="form-select" name="filtro" id="filtro" aria-label="Select Filter Users">
-                        <option value="1" selected>Todos</option>
-                        <option value="2">Con adeudos</option>
-                        <option value="3">Sin adeudos</option>
+                        <option value="1">Todos</option>
+                        <option value="2" {{ request('filtro') == '2' ? 'selected': '' }}>Con adeudos (Más a menos)</option>
+                        <option value="3" {{ request('filtro') == '3' ? 'selected': '' }}>Con adeudos (Menos a más)</option>
+                        <option value="4" {{ request('filtro') == '4' ? 'selected': '' }}>Sin adeudos</option>
                     </select>
                 </div>
                 <div class="col-4 col-sm-2 d-grid">
@@ -49,11 +50,12 @@
                             <td>${{$beneficiario->tarjeta->monto_tarjeta}}</td>
                             @if($beneficiario->tarjeta->mesesPendientes_tarjeta == 0 || $beneficiario->tarjeta->mesesPendientes_tarjeta > 1)
                                 <td>{{$beneficiario->tarjeta->mesesPendientes_tarjeta}} meses</td>
+                            @elseif($beneficiario->tarjeta->mesesPendientes_tarjeta < 0)
+                                <td>0 meses</td>
                             @else
                                 <td>{{$beneficiario->tarjeta->mesesPendientes_tarjeta}} mes</td>
                             @endif
                             <td>
-                            @if($beneficiario->tarjeta->mesesPendientes_tarjeta > 0)
                                 <a class="btn btn-outline-success btn-sm" href="{{route('cobros.show', $beneficiario->id_beneficiario)}}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0"/>
@@ -63,14 +65,6 @@
                                     </svg>
                                     Pagar
                                 </a>
-                            @else
-                                <a class="btn btn-outline-primary btn-sm" href="{{route('cobros.imprimir', $beneficiario)}}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-table" viewBox="0 0 16 16">
-                                        <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm15 2h-4v3h4zm0 4h-4v3h4zm0 4h-4v3h3a1 1 0 0 0 1-1zm-5 3v-3H6v3zm-5 0v-3H1v2a1 1 0 0 0 1 1zm-4-4h4V8H1zm0-4h4V4H1zm5-3v3h4V4zm4 4H6v3h4z"/>
-                                    </svg>
-                                    Imprimir tarjeta
-                                </a>
-                            @endif
                             </td>
                         </tr>
                     @endforeach
@@ -78,5 +72,8 @@
                 </table>
             </div>
             {{ $beneficiarios->links() }}
+            <div class="row justify-content-center text-center">
+                <h5 class="col-12">Total de tomas: {{ $totalTomas }}</h5>
+            </div>
         </div>
 </x-app-layout>

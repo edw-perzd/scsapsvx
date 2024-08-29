@@ -7,7 +7,7 @@
         <!-- FORMULARIO DE BÚSQUEDA -->
         <form class="row justify-content-center mt-4" action="{{route('beneficiarios.index')}}" method="GET">
             <div class="col-8 col-sm-5">
-                <input class="form-control" type="text" name="searchUser" id="searchUser" placeholder="Nombre/Tarjeta">
+                <input class="form-control" type="text" name="searchUser" id="searchUser" placeholder="Nombre/Apellido/Tarjeta/Toma" value="{{ request('searchUser') }}">
             </div>
             <div class="col-4 col-sm-2 d-grid">
                 <button type="submit" class="btn btn-outline-primary">Buscar</button>
@@ -29,6 +29,7 @@
                 <thead>
                     <tr>
                         <th>No. tarjeta</th>
+                        <th>No. toma</th>
                         <th>Nombre</th>
                         <th>Dirección</th>
                         <th>Colonia</th>
@@ -42,7 +43,8 @@
                     @foreach ($beneficiarios as $beneficiario)
                         <tr>
                             <td>{{$beneficiario->tarjeta->numero_tarjeta}}</td>
-                            <td>{{$beneficiario->nombre_beneficiario}}</td>
+                            <td>{{$beneficiario->tarjeta->numeroToma_tarjeta}}</td>
+                            <td>{{$beneficiario->nombre_beneficiario}} {{$beneficiario->aPaterno_beneficiario}} {{$beneficiario->aMaterno_beneficiario}}</td>
                             <td>{{$beneficiario->direccion_beneficiario}}</td>
                             <td>{{$beneficiario->colonia_beneficiario}}</td>
                             <td>{{$beneficiario->tarjeta->tipoUsuario_tarjeta}}</td>
@@ -99,5 +101,38 @@
             </table>
         </div>
         {{ $beneficiarios->links() }}
+        <div class="row justify-content-center text-center">
+            <h5 class="col-12">Total de usuarios registrados en el sistema: {{ $totalUsuarios }} usuarios</h5>
+        </div>
+
+        <a href="#collapseUsuarios" class="btn btn-primary btn-lg my-3" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseUsuarios">Contar tipos de usuario</a>
+        <div class="collapse" id="collapseUsuarios">
+            <div class="row justify-content-around my-3">
+                @forelse($totaltipos as $total)
+                    <div class="card border-secondary col-12 col-md-2 my-1">
+                        <div class="card-header">Total de usuarios: {{ $total->tipoUsuario_tarjeta }}</div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $total->total }} usuarios</h5>
+                        </div>
+                    </div>
+                @empty
+                @endforelse
+            </div>
+        </div>
+
+        <a href="#collapseColonias" class="btn btn-primary btn-lg my-2" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseColonias">Contar usuarios por colonia</a>
+        <div class="collapse" id="collapseColonias">
+            <div class="row justify-content-around my-3">
+                @forelse($totalcolonias as $total)
+                    <div class="card border-secondary col-12 col-md-2 my-1">
+                        <div class="card-header">Total de usuarios por: {{ $total->colonia_beneficiario }}</div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $total->total }} usuarios</h5>
+                        </div>
+                    </div>
+                @empty
+                @endforelse
+            </div>
+        </div>
     </div>
 </x-app-layout>

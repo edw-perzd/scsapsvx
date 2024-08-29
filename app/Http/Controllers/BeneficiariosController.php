@@ -15,12 +15,24 @@ class BeneficiariosController extends Controller
         if($request->has('searchUser')){
             $search = $request->searchUser;
             $query->where('nombre_beneficiario', 'LIKE', "%$search%")
+                ->orWhere('aPaterno_beneficiario', 'LIKE', "%$search")
+                ->orWhere('aMaterno_beneficiario', 'LIKE', "%$search")
                 ->orWhereHas('tarjeta', function ($q) use ($search){
                     $q->where('numero_tarjeta', 'LIKE', "%$search%");
+                })
+                ->orWhereHas('tarjeta', function ($q) use ($search){
+                    $q->where('numeroToma_tarjeta', 'LIKE', "%$search%");
                 });
         }
         $beneficiarios = $query->with('tarjeta')->paginate();
-        return view('beneficiarios.index', compact('beneficiarios'));
+
+        $totaltipos = Tarjeta::select('tipoUsuario_tarjeta')->selectRaw('count(*) as total')->groupBy('tipoUsuario_tarjeta')->get();
+
+        $totalcolonias = Beneficiario::select('colonia_beneficiario')->selectRaw('count(*) as total')->groupBy('colonia_beneficiario')->get();
+
+        $totalUsuarios = Beneficiario::count();
+
+        return view('beneficiarios.index', compact('beneficiarios', 'totaltipos', 'totalcolonias', 'totalUsuarios'));
     }
 
     public function create(){
@@ -35,13 +47,23 @@ class BeneficiariosController extends Controller
             'isTitular' => 'boolean',
             'aPaterno' => 'required|min:3|max:50',
             'aMaterno' => 'required|min:3|max:50',
-            'meses' => 'required',
+            'meses' => 'required|integer|min:1',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'direccion' => "required|min:5|max:100",
             'colonia' => 'required|not_in:0',
             'userType' => 'required|not_in:0'
         ]);
+        
+        if($request->isTitular){
+            $existTitular = Beneficiario::whereHas('tarjeta', function($query) use ($request){
+                $query->where('numeroToma_tarjeta', $request->noToma);
+            })->where('isTitular_beneficiario', true)->exists();
+
+            if($existTitular){
+                return back()->withErrors(['isTitular' => 'Esta toma ya tiene un titular.']);
+            }
+        }
 
         $beneficiario = new Beneficiario();
         $tarjeta = new Tarjeta();
@@ -77,7 +99,12 @@ class BeneficiariosController extends Controller
         $tarjeta->numero_tarjeta = $request->noTarjeta;
         $tarjeta->numeroToma_tarjeta = $request->noToma;
         $tarjeta->mesesPendientes_tarjeta = $request->meses;
-        $tarjeta->proximoPago_tarjeta = Carbon::today()->addMonth();
+        if($request->meses != 0){
+            $tarjeta->proximoPago_tarjeta = Carbon::today()->subMonthNoOverflow($request->meses);
+        }
+        else{
+            $tarjeta->proximoPago_tarjeta = Carbon::today()->addMonthNoOverflow();
+        }
         
         switch($request->userType){
             case 1:
@@ -136,7 +163,15 @@ class BeneficiariosController extends Controller
             'colonia' => 'required|not_in:0',
             'userType' => 'required|not_in:0'
         ]);
+        if($request->isTitular){
+            $existTitular = Beneficiario::whereHas('tarjeta', function($query) use ($request){
+                $query->where('numeroToma_tarjeta', $request->noToma);
+            })->where('isTitular_beneficiario', true)->exists();
 
+            if($existTitular){
+                return back()->withErrors(['isTitular' => 'Esta toma ya tiene un titular.']);
+            }
+        }
 
         $beneficiario->nombre_beneficiario = $request->name;
         $beneficiario->aPaterno_beneficiario = $request->aPaterno;

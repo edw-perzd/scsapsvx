@@ -86,12 +86,26 @@
                     <td>{{ $pago->id_pago }}</td>
                     <td>{{ $pago->tarjeta->numero_tarjeta }}</td>
                     <td>{{ $pago->meses_pago }}</td>
-                    <td>{{ ($pago->meses_pago * $pago->tarjeta->monto_tarjeta)  }}</td>
+                    <td>${{ ($pago->meses_pago * $pago->tarjeta->monto_tarjeta)  }}</td>
                     <td>{{ $pago->tarjeta->beneficiario->nombre_beneficiario  }} {{ $pago->tarjeta->beneficiario->aPaterno_beneficiario  }} {{ $pago->tarjeta->beneficiario->aMaterno_beneficiario  }}</td>
                     <td>{{ $pago->tarjeta->tipoUsuario_tarjeta }}</td>
                     <td>{{ $pago->fecha_pago }}</td>
                 </tr>
                 @endforeach
+            </tbody>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th>Cantidad de pagos</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ $totalpagos }}</td>
+                    <td>${{ $totalmontos }}</td>
+                </tr>
             </tbody>
         </table>
     </div>

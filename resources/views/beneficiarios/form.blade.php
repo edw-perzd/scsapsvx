@@ -26,7 +26,7 @@
                         <input class="form-control" type="number" name="noToma" id="noToma" placeholder="Escribe número de toma" value="{{ old('noToma') }}" required>
                     </div>
                     <div class="col-6 col-md-4">
-                        <input type="checkbox" class="btn-check" id="isTitular" name="isTitular" autocomplete="off">
+                        <input type="checkbox" class="btn-check" id="isTitular" name="isTitular" value=1 autocomplete="off">
                         <label for="isTitular" class="btn btn-outline-success">Es titular</label>
                     </div>
                     <div class="col-12 col-md-6">

@@ -7,6 +7,7 @@ use App\Models\Tarjeta;
 use App\Models\Beneficiario;
 use App\Models\Pago;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 Carbon::setLocale('es');
@@ -21,30 +22,47 @@ class CobrosController extends Controller
                 $query->whereHas('tarjeta', function ($q){
                     $q->where('mesesPendientes_tarjeta', '>', 0);
                 });
+                $query->with('tarjeta')->join('tarjetas', 'beneficiarios.id_beneficiario', '=', 'tarjetas.id_beneficiario')
+                        ->orderBy('tarjetas.mesesPendientes_tarjeta', 'desc');
                 break;
             case '3':
                 $query->whereHas('tarjeta', function ($q){
+                    $q->where('mesesPendientes_tarjeta', '>', 0);
+                });
+                $query->with('tarjeta')->join('tarjetas', 'beneficiarios.id_beneficiario', '=', 'tarjetas.id_beneficiario')
+                        ->orderBy('tarjetas.mesesPendientes_tarjeta', 'asc');
+                break;
+            case '4':
+                $query->whereHas('tarjeta', function ($q){
                     $q->where('mesesPendientes_tarjeta', '<', 1);
                 });
+                $query->with('tarjeta')->join('tarjetas', 'beneficiarios.id_beneficiario', '=', 'tarjetas.id_beneficiario')
+                        ->orderBy('tarjetas.numeroToma_tarjeta', 'asc');
                 break;
             default:
+                $query->with('tarjeta')->join('tarjetas', 'beneficiarios.id_beneficiario', '=', 'tarjetas.id_beneficiario')
+                        ->orderBy('tarjetas.numeroToma_tarjeta', 'asc');
                 break;
         }
 
-        $beneficiarios = $query->with('tarjeta')->paginate();
-
+        $beneficiarios = $query->paginate();
+        
         foreach($beneficiarios as $beneficiario){
             $tarjeta = Tarjeta::where('id_beneficiario', $beneficiario->id_beneficiario)->first();
-            $tarjeta->mesesPendientes_tarjeta = Carbon::parse($tarjeta->proximoPago_tarjeta)->diffInMonths(Carbon::today()) + 1;
+            $tarjeta->mesesPendientes_tarjeta = Carbon::parse($tarjeta->proximoPago_tarjeta)->diffInMonths(Carbon::today());
             $tarjeta->save();
         }
 
-        return view('cobros.index', compact('beneficiarios'));
+        $totalTomas = Tarjeta::distinct('numeroToma_tarjeta')->count();
+
+        return view('cobros.index', compact('beneficiarios', 'totalTomas'));
     }
 
     public function show($beneficiario){
 
         $fechas = [];
+
+        $mesesRestantes = [];
 
         $beneficiario = Beneficiario::where('id_beneficiario', $beneficiario)->with('tarjeta')->first();
 
@@ -54,10 +72,28 @@ class CobrosController extends Controller
 
             array_push($fechas, $fechaProxima->format('M Y'));
             
-            $fechaProxima->addMonth();
+            $fechaProxima->addMonthNoOverflow();
         }
 
-        return view('cobros.target', compact('beneficiario', 'fechas'));
+        // Obtener el año en curso
+        $anioActual = Carbon::now()->year;
+
+        // Definir el primer mes y el último mes del año en curso
+        if($fechas == []){
+            $primerMes = Carbon::parse($fechaProxima)->month;
+        }
+        else{
+            $primerMes = Carbon::createFromFormat('M Y', $fechas[count($fechas) - 1])->month + 1;
+        }
+        $ultimoMes = 12;
+
+        // Loop desde el mes actual hasta diciembre
+        for ($i = $primerMes; $i <= $ultimoMes; $i++) {
+            // Crear un objeto Carbon para cada mes y obtener el nombre del mes
+            $mesesRestantes[] = Carbon::create($anioActual, $i, 1)->format('M Y');
+        }
+
+        return view('cobros.target', compact('beneficiario', 'fechas', 'mesesRestantes'));
     } 
 
     public function pagar(Request $request, $beneficiario){
@@ -75,7 +111,7 @@ class CobrosController extends Controller
 
         $pago->id_user=Auth::user()->id;
 
-        $tarjeta->proximoPago_tarjeta = Carbon::parse($tarjeta->proximoPago_tarjeta)->addMonths(count($validatedData['meses']));
+        $tarjeta->proximoPago_tarjeta = Carbon::parse($tarjeta->proximoPago_tarjeta)->addMonthsNoOverflow(count($validatedData['meses']));
 
         $tarjeta->save();
 
