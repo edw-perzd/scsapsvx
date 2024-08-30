@@ -42,8 +42,8 @@
                         <input class="form-control" type="text" name="aMaterno" id="aMaterno" placeholder="Escribe apellido materno" value="{{ old('aMaterno') }}" required>
                     </div>
                     <div class="col-12 col-md-6">
-                        <label for="meses" class="form-label">Meses de adeudo</label>
-                        <input class="form-control" type="number" name="meses" id="meses" step="1" value="{{ old('latitude', 0) }}" required>
+                        <label for="meses" class="form-label">Meses de adeudo sin contar el mes actual</label>
+                        <input class="form-control" type="number" name="meses" id="meses" step="1" value="{{ old('meses', 0) }}" required>
                     </div>
                     <div class="col-12 col-sm-6 col-md-4 my-2">
                         <label for="latitude" class="form-label">Latitud</label>

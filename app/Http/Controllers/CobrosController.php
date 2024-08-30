@@ -62,7 +62,7 @@ class CobrosController extends Controller
         
         foreach($beneficiarios as $beneficiario){
             $tarjeta = Tarjeta::where('id_beneficiario', $beneficiario->id_beneficiario)->first();
-            $tarjeta->mesesPendientes_tarjeta = Carbon::parse($tarjeta->proximoPago_tarjeta)->diffInMonths(Carbon::today());
+            $tarjeta->mesesPendientes_tarjeta = Carbon::parse($tarjeta->proximoPago_tarjeta)->subMonthNoOverflow()->diffInMonths(Carbon::today());
             $tarjeta->save();
         }
 

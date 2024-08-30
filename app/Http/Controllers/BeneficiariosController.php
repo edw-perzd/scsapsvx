@@ -47,7 +47,7 @@ class BeneficiariosController extends Controller
             'isTitular' => 'boolean',
             'aPaterno' => 'required|min:3|max:50',
             'aMaterno' => 'required|min:3|max:50',
-            'meses' => 'required|integer|min:1',
+            'meses' => 'required|integer|min:0',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'direccion' => "required|min:5|max:100",
@@ -100,7 +100,12 @@ class BeneficiariosController extends Controller
         $tarjeta->numeroToma_tarjeta = $request->noToma;
         $tarjeta->mesesPendientes_tarjeta = $request->meses;
         if($request->meses != 0){
-            $tarjeta->proximoPago_tarjeta = Carbon::today()->subMonthNoOverflow($request->meses);
+            if($request->meses == 1){
+                $tarjeta->proximoPago_tarjeta = Carbon::today()->subMonthNoOverflow($request->meses);
+            }
+            else{
+                $tarjeta->proximoPago_tarjeta = Carbon::today()->subMonthNoOverflow($request->meses - 1);
+            }
         }
         else{
             $tarjeta->proximoPago_tarjeta = Carbon::today()->addMonthNoOverflow();
