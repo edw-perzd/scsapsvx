@@ -17,12 +17,6 @@
                 width: 30px;
                 height: 30px;
             }
-            .card h3 {
-                font-size: 2rem;
-            }
-            .card p {
-                font-size: 1.25rem;
-            }
             #map {
             height: 200px; /* Ajusta la altura según tus necesidades */
             }
