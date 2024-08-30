@@ -28,15 +28,15 @@
                     <div class="col-12 col-sm-8 my-2">
                         <label for="rol" class="form-label">Rol</label>
                         <select class="form-select" name="rol" id="rol">
-                          <option selected>Selecciona un rol</option>
+                          <option value=0 selected>Selecciona un rol</option>
                           @foreach($roles as $role)
                             @if($user->roles->isEmpty())
-                                <option value="{{$role->id}}">{{$role->name}}</option>
+                                <option value={{$role->id}}>{{$role->name}}</option>
                             @else
                                 @if($role->id == $user->roles['0']->id)
-                                    <option selected value="{{$role->id}}">{{$role->name}}</option>
+                                    <option selected value={{$role->id}}>{{$role->name}}</option>
                                 @else
-                                    <option value="{{$role->id}}">{{$role->name}}</option>
+                                    <option value={{$role->id}}>{{$role->name}}</option>
                                 @endif
                             @endif
                           @endforeach

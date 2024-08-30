@@ -55,6 +55,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|min:3|max:50',
             'email' => "required|unique:users,email,{$user->id}",
+            'rol' => 'required|not_in:0'
         ]);
 
         $user->name = $request->name;
