@@ -101,10 +101,10 @@ class BeneficiariosController extends Controller
         $tarjeta->mesesPendientes_tarjeta = $request->meses;
         if($request->meses != 0){
             if($request->meses == 1){
-                $tarjeta->proximoPago_tarjeta = Carbon::today()->subMonthNoOverflow($request->meses);
+                $tarjeta->proximoPago_tarjeta = Carbon::today();
             }
             else{
-                $tarjeta->proximoPago_tarjeta = Carbon::today()->subMonthNoOverflow($request->meses - 1);
+                $tarjeta->proximoPago_tarjeta = Carbon::today()->subMonthsNoOverflow($request->meses - 1);
             }
         }
         else{
